@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - CloseLoop Technologies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-tabs .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 60px 0;
+            min-height: 600px;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-content {
+            padding: 25px;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .portfolio-description {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-link:hover {
+            color: #764ba2;
+            transform: translateX(5px);
+        }
+
+        .portfolio-link svg {
+            margin-left: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Statistics */
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Filter Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-tab {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Our Portfolio</h1>
+                <p>Discover our comprehensive collection of innovative solutions, case studies, and industry insights that showcase our expertise in digital transformation and custom software development.</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="container">
+            <button class="nav-tab active" data-category="all">All Projects</button>
+            <button class="nav-tab" data-category="case-studies">Case Studies</button>
+            <button class="nav-tab" data-category="web-apps">Web Applications</button>
+            <button class="nav-tab" data-category="mobile-apps">Mobile Apps</button>
+            <button class="nav-tab" data-category="erp">ERP Solutions</button>
+            <button class="nav-tab" data-category="ai-ml">AI & ML</button>
+        </div>
+    </nav>
+
+    <section class="portfolio-section">
+        <div class="container">
+            <div id="portfolio-grid" class="portfolio-grid">
+                <!-- Portfolio items will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <h2>Our Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="500">0</span>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="150">0</span>
+                    <span class="stat-label">Happy Clients</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="50">0</span>
+                    <span class="stat-label">Team Members</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="8">0</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Portfolio data
+        const portfolioData = [
+            {
+                title: "LastPass Data Warehouse Modernization",
+                category: "case-studies",
+                description: "Modernized LastPass's data warehouse for 80% faster insights, trusted reporting, and GDPR-compliant scale using Delta Lake, dbt, and Databricks.",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop",
+                tags: ["Databricks", "Delta Lake", "dbt", "GDPR"],
+                link: "#"
+            },
+            {
+                title: "Autotech Yard Management Solution",
+                category: "web-apps",
+                description: "Built a comprehensive yard management solution that reduced manual work by 95% and achieved 100% accuracy in vehicle tracking and services.",
+                image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&h=200&fit=crop",
+                tags: ["React", "Node.js", "IoT", "Real-time"],
+                link: "#"
+            },
+            {
+                title: "AI-Powered Call Management Tool",
+                category: "ai-ml",
+                description: "Developed an AI-powered call-by-call management tool for home service businesses with intelligent routing and analytics.",
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&fit=crop",
+                tags: ["AI", "Machine Learning", "Voice Analytics", "NLP"],
+                link: "#"
+            },
+            {
+                title: "BeautyMatter AWS Migration",
+                category: "case-studies",
+                description: "Ensured zero-downtime AWS migration for BeautyMatter, boosting speed, stability, and scalability for the growing beauty media platform.",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop",
+                tags: ["AWS", "Migration", "DevOps", "Scalability"],
+                link: "#"
+            },
+            {
+                title: "NetSuite Salesforce Integration",
+                category: "erp",
+                description: "Seamlessly integrated NetSuite with Salesforce using Celigo platform, enabling unified business operations and data synchronization.",
+                image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=200&fit=crop",
+                tags: ["NetSuite", "Salesforce", "Celigo", "Integration"],
+                link: "#"
+            },
+            {
+                title: "FitLife Mobile Application",
+                category: "mobile-apps",
+                description: "Personalized fitness app with workout plans, progress tracking, and vibrant community features for enhanced user engagement.",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop",
+                tags: ["React Native", "Health Tech", "Community", "Analytics"],
+                link: "#"
+            },
+            {
+                title: "Clinical Research Management System",
+                category: "web-apps",
+                description: "Comprehensive clinical research software that streamlines various aspects of research management for healthcare organizations.",
+                image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=200&fit=crop",
+                tags: ["Healthcare", "Research", "Compliance", "Database"],
+                link: "#"
+            },
+            {
+                title: "HR & Staffing Management Platform",
+                category: "web-apps",
+                description: "Complete HR solution for staffing agencies and candidates, serving as the ultimate platform for finding employees and managing recruitment.",
+                image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&h=200&fit=crop",
+                tags: ["HR Tech", "Staffing", "ATS", "Recruitment"],
+                link: "#"
+            },
+            {
+                title: "Real-time Data Analytics Dashboard",
+                category: "ai-ml",
+                description: "Advanced data visualization platform that provides real-time insights and analytics for business intelligence and decision-making.",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop",
+                tags: ["Analytics", "Dashboard", "Real-time", "Business Intelligence"],
+                link: "#"
+            },
+            {
+                title: "Tennis & Pickleball Professional Network",
+                category: "mobile-apps",
+                description: "Mobile platform for tennis and pickleball professionals to track progress, connect with peers, and expand their professional networks.",
+                image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=200&fit=crop",
+                tags: ["Sports Tech", "Networking", "Progress Tracking", "Community"],
+                link: "#"
+            },
+            {
+                title: "Oracle NetSuite ERP Implementation",
+                category: "erp",
+                description: "Complete NetSuite ERP implementation for equity rollup businesses, streamlining operations and financial management.",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop",
+                tags: ["NetSuite", "ERP", "Financial Management", "Operations"],
+                link: "#"
+            },
+            {
+                title: "Pharmacy Education Management System",
+                category: "web-apps",
+                description: "Specialized software for pharmacy education and residency programs, designed to streamline academic and training processes.",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=200&fit=crop",
+                tags: ["Education", "Healthcare", "Training", "Management"],
+                link: "#"
+            }
+        ];
+
+        // DOM elements
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        // Current filter
+        let currentFilter = 'all';
+
+        // Initialize portfolio
+        function initPortfolio() {
+            renderPortfolio(portfolioData);
+            initNavigation();
+            initCounterAnimation();
+        }
+
+        // Render portfolio items
+        function renderPortfolio(items) {
+            portfolioGrid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            
+            setTimeout(() => {
+                const filteredItems = currentFilter === 'all' 
+                    ? items 
+                    : items.filter(item => item.category === currentFilter);
+                
+                portfolioGrid.innerHTML = filteredItems.map((item, index) => `
+                    <div class="portfolio-item fade-in" style="animation-delay: ${index * 0.1}s">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy">
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">${getCategoryName(item.category)}</div>
+                            <h3 class="portfolio-title">${item.title}</h3>
+                            <p class="portfolio-description">${item.description}</p>
+                            <div class="portfolio-tags">
+                                ${item.tags.map(tag => `<span class="portfolio-tag">${tag}</span>`).join('')}
+                            </div>
+                            <a href="${item.link}" class="portfolio-link">
+                                View Project
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }, 300);
+        }
+
+        // Get category display name
+        function getCategoryName(category) {
+            const categoryNames = {
+                'case-studies': 'Case Study',
+                'web-apps': 'Web Application',
+                'mobile-apps': 'Mobile App',
+                'erp': 'ERP Solution',
+                'ai-ml': 'AI & ML'
+            };
+            return categoryNames[category] || 'Project';
+        }
+
+        // Initialize navigation
+        function initNavigation() {
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Update filter
+                    currentFilter = tab.dataset.category;
+                    
+                    // Re-render portfolio
+                    renderPortfolio(portfolioData);
+                });
+            });
+        }
+
+        // Counter animation
+        function initCounterAnimation() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.dataset.count);
+                        let current = 0;
+                        const increment = target / 100;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                counter.textContent = target + '+';
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current);
+                            }
+                        }, 20);
+                        
+                        observer.unobserve(counter);
+                    }
+                });
+            }, observerOptions);
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Initialize everything when DOM loads
+        document.addEventListener('DOMContentLoaded', initPortfolio);
+
+        // Smooth scrolling for internal links
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
